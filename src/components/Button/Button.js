@@ -1,24 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Button extends Component {
-  handleClick = () => {
-    const { onClick } = this.props;
-    onClick();
-  };
-
-  render() {
-    const { isVisible } = this.props;
-
-    return (
-      <button
-        className="button-load-more"
-        onClick={this.handleClick}
-        style={{ display: isVisible ? 'block' : 'none' }}
-      >
-        Load More
-      </button>
-    );
-  }
-}
+const Button = ({ onClick, isVisible }) => (
+  <button
+    className="button-load-more"
+    onClick={onClick}
+    style={{ display: isVisible ? 'block' : 'none' }}
+  >
+    Load More
+  </button>
+);
 
 export default Button;
