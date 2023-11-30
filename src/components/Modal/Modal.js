@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 const Modal = ({ imageUrl, alt, onClose }) => {
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
+
+  useEffect(() => {
+    const handleKeyDown = event => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleClose]);
 
   return (
     <div className="modal-overlay" onClick={handleClose}>

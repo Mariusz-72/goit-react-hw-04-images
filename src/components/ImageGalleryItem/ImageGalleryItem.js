@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const ImageGalleryItem = ({ imageUrl, alt, onClick }) => {
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     onClick(imageUrl);
-  };
+  }, [imageUrl, onClick]);
 
   return (
     <div className="image-gallery-item" onClick={handleClick}>

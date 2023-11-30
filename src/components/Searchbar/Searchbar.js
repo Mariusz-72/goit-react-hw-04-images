@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const Searchbar = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const inputRef = useRef(null);
 
   const handleChange = e => {
     setSearchQuery(e.target.value);
@@ -10,6 +11,8 @@ const Searchbar = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit(searchQuery);
+    setSearchQuery('');
+    inputRef.current.blur();
   };
 
   return (
@@ -27,6 +30,7 @@ const Searchbar = ({ onSubmit }) => {
           placeholder="Search images and photos"
           value={searchQuery}
           onChange={handleChange}
+          ref={inputRef}
         />
       </form>
     </header>
