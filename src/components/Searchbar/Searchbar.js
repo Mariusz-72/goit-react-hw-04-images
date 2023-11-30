@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Searchbar = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const inputRef = useRef(null);
 
   const handleChange = e => {
     setSearchQuery(e.target.value);
@@ -11,9 +10,21 @@ const Searchbar = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit(searchQuery);
-    setSearchQuery('');
-    inputRef.current.blur();
   };
+
+  useEffect(() => {
+    const handleKeyUp = e => {
+      if (e.key === 'Enter') {
+        onSubmit(searchQuery);
+      }
+    };
+
+    document.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [onSubmit, searchQuery]);
 
   return (
     <header className="searchbar">
@@ -30,7 +41,6 @@ const Searchbar = ({ onSubmit }) => {
           placeholder="Search images and photos"
           value={searchQuery}
           onChange={handleChange}
-          ref={inputRef}
         />
       </form>
     </header>
